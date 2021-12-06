@@ -1,5 +1,5 @@
 from flask import request
-from userLogin import app
+from userLogin import application
 import boto3
 import logging
 from botocore.exceptions import ClientError
@@ -21,7 +21,7 @@ table_name = os.getenv("DYNAMO_USER_TABLE")
 adding to the cognito we will do a check if the email id is already present in the dynamo DB'''
 
 
-@app.route('/sign-up', methods=['POST'])
+@application.route('/sign-up', methods=['POST'])
 def signUp():
     logging.log("signUp() request is "+json.dumps(request.get_json()))
     response = None

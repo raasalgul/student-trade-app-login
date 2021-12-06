@@ -1,5 +1,5 @@
 from flask import request,jsonify
-from userLogin import app
+from userLogin import application
 import boto3
 import logging
 from botocore.exceptions import ClientError
@@ -15,7 +15,7 @@ table_name = os.getenv("DYNAMO_USER_TABLE")
 
 
 
-@app.route('/sign-in',methods=['POST'])
+@application.route('/sign-in',methods=['POST'])
 def signIn():
     logging.log("signIn() request is {}".format(request.json))
     '''Check for the user in cognito pool'''
