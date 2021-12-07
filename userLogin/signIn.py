@@ -17,19 +17,19 @@ table_name = os.getenv("DYNAMO_USER_TABLE")
 
 @application.route('/sign-in',methods=['POST'])
 def signIn():
-    logging.log("signIn() request is {}".format(request.json))
+    logging.info("signIn() request is {}".format(request.json))
     '''Check for the user in cognito pool'''
     response = cognitoClient.initiate_auth(
         ClientId=os.getenv('COGNITO_CLIENT_API'),
         AuthFlow="USER_PASSWORD_AUTH",
         AuthParameters={"USERNAME": request.json['email'], "PASSWORD": request.json['password']},
     )
-    logging.log("Response from cognito {}".format(response))
+    logging.info("Response from cognito {}".format(response))
 
 
     access_token = response["AuthenticationResult"]["AccessToken"]
     '''Checking whether the user in the pool'''
     responseUserData = cognitoClient.get_user(AccessToken=access_token)
-    logging.log("Response user data {}".format(responseUserData))
+    logging.info("Response user data {}".format(responseUserData))
 
     return jsonify(response)

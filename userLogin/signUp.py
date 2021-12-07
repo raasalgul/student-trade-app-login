@@ -23,12 +23,12 @@ adding to the cognito we will do a check if the email id is already present in t
 
 @application.route('/sign-up', methods=['POST'])
 def signUp():
-    logging.log("signUp() request is "+json.dumps(request.get_json()))
+    logging.info("signUp() request is "+json.dumps(request.get_json()))
     response = None
     try:
         '''Connect to the User Info table'''
         table = dynamoDbResource.Table(table_name)
-        logging.log("Table is connected")
+        logging.info("Table is connected")
         '''email is the primary key and institution is the sort key'''
         key = {"email": request.json['email'],
                "institution": request.json['institution']
@@ -40,7 +40,7 @@ def signUp():
                 "updated_datetime":datetime.now()
                 }
         response = table.get_item(Key=key)
-        logging.log("Is already existed user {}".format('Item' in response))
+        logging.info("Is already existed user {}".format('Item' in response))
         ''''Checking for email is already present in the application (by checking user info table)'''
         if 'Item' not in response:
             try:
@@ -52,10 +52,10 @@ def signUp():
                     UserAttributes=[{"Name": "name", "Value": request.json['username']}
                                     ],
                 )
-                logging.log("User added to Cognito Pool {}".format(response))
+                logging.info("User added to Cognito Pool {}".format(response))
                 '''After adding to the cognito pool add the basic info to user info table'''
                 table.put_item(Item=item)
-                logging.log("New User added to the Dynamo Db")
+                logging.info("New User added to the Dynamo Db")
             except ClientError as e:
                 logging.error(e)
     except ClientError as e:
