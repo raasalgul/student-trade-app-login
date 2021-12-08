@@ -27,9 +27,10 @@ def signIn():
     logging.info("Response from cognito {}".format(response))
 
 
-    access_token = response["AuthenticationResult"]["AccessToken"]
-    '''Checking whether the user in the pool'''
-    responseUserData = cognitoClient.get_user(AccessToken=access_token)
-    logging.info("Response user data {}".format(responseUserData))
+    # access_token = response["AuthenticationResult"]["AccessToken"]
+    # '''Checking whether the user in the pool'''
+    # responseUserData = cognitoClient.get_user(AccessToken=access_token)
+    # print("Response user data {}".format(responseUserData))
+    # logging.info("Response user data {}".format(responseUserData))
 
     return jsonify(response)
