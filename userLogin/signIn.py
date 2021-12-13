@@ -25,7 +25,7 @@ def signIn():
         AuthParameters={"USERNAME": request.json['email'], "PASSWORD": request.json['password']},
     )
     logging.info("Response from cognito {}".format(response))
-
+    print(response['AuthenticationResult']['AccessToken'])
 
     # access_token = response["AuthenticationResult"]["AccessToken"]
     # '''Checking whether the user in the pool'''
@@ -33,4 +33,5 @@ def signIn():
     # print("Response user data {}".format(responseUserData))
     # logging.info("Response user data {}".format(responseUserData))
 
-    return jsonify(response)
+    # return jsonify(response)
+    return jsonify({"token":response['AuthenticationResult']['AccessToken']})
